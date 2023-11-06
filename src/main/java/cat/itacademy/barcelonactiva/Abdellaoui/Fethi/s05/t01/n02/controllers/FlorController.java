@@ -32,14 +32,21 @@ public class FlorController {
 
 	@PutMapping("/update")
 	public ResponseEntity<FlorDTO> update(@RequestBody FlorDTO dto) {
+		FlorDTO fdto = florService.getFlor(dto.getPk_FlorID());
+		if (fdto == null) {
+			System.out.println("Controller FlorDTO no trobat");
+			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+		}
 		florService.update(dto);
+		System.out.println(fdto);
+		System.out.println(dto);
 		return new ResponseEntity<>(dto, HttpStatus.OK);
 	}
 
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<HttpStatus> delete(@PathVariable("id") Integer id) {
 		FlorDTO fdto = florService.getFlor(id);
-		if(fdto==null) {
+		if (fdto == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		florService.deleteById(id);
@@ -49,7 +56,7 @@ public class FlorController {
 	@GetMapping("/getOne/{id}")
 	public ResponseEntity<FlorDTO> getFlor(@PathVariable Integer id) {
 		FlorDTO fdto = florService.getFlor(id);
-		if(fdto==null) {
+		if (fdto == null) {
 			return new ResponseEntity<>(HttpStatus.NOT_FOUND);
 		}
 		return new ResponseEntity<>(fdto, HttpStatus.OK);

@@ -11,8 +11,6 @@ import cat.itacademy.barcelonactiva.Abdellaoui.Fethi.s05.t01.n02.model.domain.Fl
 import cat.itacademy.barcelonactiva.Abdellaoui.Fethi.s05.t01.n02.model.dto.FlorDTO;
 import cat.itacademy.barcelonactiva.Abdellaoui.Fethi.s05.t01.n02.model.repository.FlorRepository;
 
-
-
 @Service
 public class FlorService {
 
@@ -31,7 +29,7 @@ public class FlorService {
 		List<FlorEntity> listEntity = florRepository.findAll();
 		List<FlorDTO> listDto = new ArrayList<>();
 		if (!listEntity.isEmpty()) {
-			listEntity.forEach(e->listDto.add(FlorDTO.toDTO(e)));
+			listEntity.forEach(e -> listDto.add(FlorDTO.toDTO(e)));
 		}
 		return listDto;
 	}
@@ -46,16 +44,12 @@ public class FlorService {
 	}
 
 	public void update(FlorDTO dto) {
-		Optional<FlorEntity> entity = florRepository.findById(dto.getPk_FlorID());
-		if (entity.isPresent()) {
-			florRepository.save(entity.get());
-		} else {
-			System.out.println("Flor no trobat");
-		}		
+		FlorEntity entity = FlorEntity.toEntity(dto);
+		florRepository.save(entity);
 	}
 
 	public void addFlor(FlorDTO dto) {
 		FlorEntity entity = FlorEntity.toEntity(dto);
-		florRepository.save(entity);		
+		florRepository.save(entity);
 	}
 }
